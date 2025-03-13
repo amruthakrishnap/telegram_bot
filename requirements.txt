@@ -3,3 +3,6 @@ supabase
 aiohttp
 requests
 gunicorn
+fastapi
+uvicorn
+gunicorn
