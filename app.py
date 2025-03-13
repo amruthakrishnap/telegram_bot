@@ -3,7 +3,20 @@ from telegram.ext import Application, CommandHandler, CallbackQueryHandler, Cont
 from supabase import create_client, Client
 import os
 from telegram import ReplyKeyboardRemove, error
+from fastapi import FastAPI
+import asyncio
+from bot import main  # Import your bot's main function
 
+app = FastAPI()
+
+@app.get("/")
+def home():
+    return {"message": "Telegram Bot is Running!"}
+
+@app.on_event("startup")
+async def start_bot():
+    loop = asyncio.get_event_loop()
+    loop.create_task(main())  # Start the bot in the background
 # Supabase Credentials
 SUPABASE_URL = 'https://vjgxtqqrbehmoqsgorvq.supabase.co'
 SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZqZ3h0cXFyYmVobW9xc2dvcnZxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjI4NTI5ODcsImV4cCI6MjAzODQyODk4N30.Qlhws14rMtrM7frgxLKgM6flg3I1JvJ-JPd5gd6A3-Q'
